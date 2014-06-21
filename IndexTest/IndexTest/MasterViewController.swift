@@ -46,6 +46,10 @@ class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 		return sections[section]
 	}
 	
+	override func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
+		return 30.0
+	}
+	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 7
 	}
@@ -73,7 +77,7 @@ class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 	
 	func tableViewIndexTopLayoutGuideLength() -> Double {
 		// In most cases, just this line should be fine. Otherwise, uncomment the code below.
-		return topLayoutGuide.length
+		return topLayoutGuide.length + tableView(tableView, heightForHeaderInSection: 0)
 //		var topHeight = 0.0
 //		let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
 //		topHeight += statusBarHeight
