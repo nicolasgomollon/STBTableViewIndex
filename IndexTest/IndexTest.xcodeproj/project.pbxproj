@@ -14,23 +14,6 @@
 		DA8F459F1954FADE00075BD1 /* STBTableViewIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8F459E1954FADE00075BD1 /* STBTableViewIndex.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		DA8F458F1954F97900075BD1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA8F45721954F97800075BD1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA8F45791954F97800075BD1;
-			remoteInfo = IndexTest;
-		};
-		DA8F45A01954FFFE00075BD1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA8F45721954F97800075BD1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA8F45791954F97800075BD1;
-			remoteInfo = IndexTest;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		DA8F457A1954F97800075BD1 /* IndexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IndexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA8F457E1954F97900075BD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,19 +21,11 @@
 		DA8F45811954F97900075BD1 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		DA8F45861954F97900075BD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA8F45881954F97900075BD1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DA8F458E1954F97900075BD1 /* IndexTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IndexTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA8F459E1954FADE00075BD1 /* STBTableViewIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = STBTableViewIndex.swift; path = ../STBTableViewIndex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DA8F45771954F97800075BD1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA8F458B1954F97900075BD1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -73,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				DA8F457A1954F97800075BD1 /* IndexTest.app */,
-				DA8F458E1954F97900075BD1 /* IndexTestTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,25 +92,6 @@
 			productReference = DA8F457A1954F97800075BD1 /* IndexTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA8F458D1954F97900075BD1 /* IndexTestTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA8F459B1954F97900075BD1 /* Build configuration list for PBXNativeTarget "IndexTestTests" */;
-			buildPhases = (
-				DA8F458A1954F97900075BD1 /* Sources */,
-				DA8F458B1954F97900075BD1 /* Frameworks */,
-				DA8F458C1954F97900075BD1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA8F45901954F97900075BD1 /* PBXTargetDependency */,
-				DA8F45A11954FFFE00075BD1 /* PBXTargetDependency */,
-			);
-			name = IndexTestTests;
-			productName = IndexTestTests;
-			productReference = DA8F458E1954F97900075BD1 /* IndexTestTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,10 +103,6 @@
 				TargetAttributes = {
 					DA8F45791954F97800075BD1 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					DA8F458D1954F97900075BD1 = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = DA8F45791954F97800075BD1;
 					};
 				};
 			};
@@ -169,7 +120,6 @@
 			projectRoot = "";
 			targets = (
 				DA8F45791954F97800075BD1 /* IndexTest */,
-				DA8F458D1954F97900075BD1 /* IndexTestTests */,
 			);
 		};
 /* End PBXProject section */
@@ -181,13 +131,6 @@
 			files = (
 				DA8F45871954F97900075BD1 /* Main.storyboard in Resources */,
 				DA8F45891954F97900075BD1 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA8F458C1954F97900075BD1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,27 +147,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA8F458A1954F97900075BD1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DA8F45901954F97900075BD1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA8F45791954F97800075BD1 /* IndexTest */;
-			targetProxy = DA8F458F1954F97900075BD1 /* PBXContainerItemProxy */;
-		};
-		DA8F45A11954FFFE00075BD1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA8F45791954F97800075BD1 /* IndexTest */;
-			targetProxy = DA8F45A01954FFFE00075BD1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DA8F45851954F97900075BD1 /* Main.storyboard */ = {
@@ -337,42 +260,6 @@
 			};
 			name = Release;
 		};
-		DA8F459C1954F97900075BD1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IndexTest.app/IndexTest";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = IndexTestTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		DA8F459D1954F97900075BD1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IndexTest.app/IndexTest";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = IndexTestTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -390,14 +277,6 @@
 			buildConfigurations = (
 				DA8F45991954F97900075BD1 /* Debug */,
 				DA8F459A1954F97900075BD1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		DA8F459B1954F97900075BD1 /* Build configuration list for PBXNativeTarget "IndexTestTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA8F459C1954F97900075BD1 /* Debug */,
-				DA8F459D1954F97900075BD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
