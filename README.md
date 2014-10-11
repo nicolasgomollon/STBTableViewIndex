@@ -20,7 +20,7 @@ indexView.titles = ["A", "B", "C", "D", "E"]
 indexView.delegate = self
 
 // Add subview.
-navigationController.view.addSubview(indexView)
+navigationController?.view.addSubview(indexView)
 
 // Flash index bar (useful in methods such as viewWillAppear, to give the user a hint).
 indexView.flashIndex()
@@ -34,11 +34,11 @@ func tableViewIndexChanged(index: Int, title: String) {
 	tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
 }
 
-func tableViewIndexTopLayoutGuideLength() -> Double {
+func tableViewIndexTopLayoutGuideLength() -> CGFloat {
 	return topLayoutGuide.length
 }
 
-func tableViewIndexBottomLayoutGuideLength() -> Double {
+func tableViewIndexBottomLayoutGuideLength() -> CGFloat {
 	return bottomLayoutGuide.length
 }
 ```

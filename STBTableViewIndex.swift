@@ -15,9 +15,9 @@ protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
 	func tableViewIndexChanged(index: Int, title: String)
 	
-	func tableViewIndexTopLayoutGuideLength() -> Double
+	func tableViewIndexTopLayoutGuideLength() -> CGFloat
 	
-	func tableViewIndexBottomLayoutGuideLength() -> Double
+	func tableViewIndexBottomLayoutGuideLength() -> CGFloat
 	
 }
 
@@ -48,24 +48,24 @@ class STBTableViewIndex: UIControl {
 	
 	var labels = Array<UILabel>()
 	
-	var width: Double { return 16.0 }
-	var horizontalPadding: Double { return 5.0 }
-	var verticalPadding: Double { return 5.0 }
-	var endPadding: Double { return 3.0 }
+	var width: CGFloat { return 16.0 }
+	var horizontalPadding: CGFloat { return 5.0 }
+	var verticalPadding: CGFloat { return 5.0 }
+	var endPadding: CGFloat { return 3.0 }
 	
-	var controlSizeWidth: Double { return width + (horizontalPadding * 2.0) }
-	var controlOriginX: Double {
+	var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
+	var controlOriginX: CGFloat {
 		let screenWidth = UIScreen.mainScreen().bounds.size.width
 		return screenWidth - controlSizeWidth
 	}
-	var controlOriginY: Double {
+	var controlOriginY: CGFloat {
 		if let topHeight = delegate?.tableViewIndexTopLayoutGuideLength() {
 			return topHeight
 		}
 		return 0.0
 	}
-	var controlSizeHeight: Double {
-		var sizeHeight = 0.0
+	var controlSizeHeight: CGFloat {
+		var sizeHeight: CGFloat = 0.0
 		let screenHeight = UIScreen.mainScreen().bounds.size.height
 		sizeHeight = screenHeight
 		sizeHeight -= controlOriginY
@@ -92,15 +92,25 @@ class STBTableViewIndex: UIControl {
 	}
 	
 	
-	convenience init() {
+	convenience override init() {
 		self.init(frame: CGRectZero)
 	}
 	
-	init(frame: CGRect) {
+	override init(frame: CGRect) {
 		titles = Array<String>()
 		visible = true
 		super.init(frame: CGRectZero)
-		
+		initialize()
+	}
+	
+	required init(coder aDecoder: NSCoder) {
+		titles = Array<String>()
+		visible = true
+		super.init(coder: aDecoder)
+		initialize()
+	}
+	
+	func initialize() {
 		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handleGesture:")
 		addGestureRecognizer(panGestureRecognizer)
 		
@@ -126,7 +136,7 @@ class STBTableViewIndex: UIControl {
 		
 		var labelOriginY = endPadding
 		let labelWidth = CGRectGetWidth(view.frame)
-		let labelHeight = (CGRectGetHeight(view.frame) - (endPadding * 2.0)) / Double(labels.count)
+		let labelHeight = (CGRectGetHeight(view.frame) - (endPadding * 2.0)) / CGFloat(labels.count)
 		
 		for label in labels {
 			let labelFrame = CGRectMake(0.0, labelOriginY, labelWidth, labelHeight)
@@ -136,7 +146,9 @@ class STBTableViewIndex: UIControl {
 	}
 	
 	func createLabels() {
-		NSArray(array: labels).makeObjectsPerformSelector("removeFromSuperview")
+		for label in labels {
+			label.removeFromSuperview()
+		}
 		labels.removeAll()
 		for (tag, title) in enumerate(titles) {
 			var label = UILabel(frame: CGRectZero)
@@ -147,7 +159,7 @@ class STBTableViewIndex: UIControl {
 			label.text = title
 			label.tag = tag
 			view.addSubview(label)
-			labels += label
+			labels += [label]
 		}
 	}
 	
@@ -177,14 +189,14 @@ class STBTableViewIndex: UIControl {
 		NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
 	}
 	
-	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		let touch = touches.anyObject() as UITouch
 		let location = touch.locationInView(self)
 		setNewIndex(point: location)
 		visible = true
 	}
 	
-	override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+	override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
 		visible = false
 	}
 	
