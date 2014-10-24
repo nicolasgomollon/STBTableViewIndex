@@ -38,6 +38,7 @@ class STBTableViewIndex: UIControl {
 	}
 	}
 	
+	var autoHides = true
 	var visible: Bool {
 	didSet {
 		UIView.animateWithDuration(0.2, animations: {
@@ -193,17 +194,23 @@ class STBTableViewIndex: UIControl {
 		let touch = touches.anyObject() as UITouch
 		let location = touch.locationInView(self)
 		setNewIndex(point: location)
-		visible = true
+		if autoHides {
+			visible = true
+		}
 	}
 	
 	override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-		visible = false
+		if autoHides {
+			visible = false
+		}
 	}
 	
 	func _handleGesture(gesture: UIGestureRecognizer) {
 		let location = gesture.locationInView(self)
 		setNewIndex(point: location)
-		visible = !(gesture.state == .Ended)
+		if autoHides {
+			visible = !(gesture.state == .Ended)
+		}
 	}
 	
 }

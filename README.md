@@ -22,6 +22,9 @@ indexView.delegate = self
 // Add subview.
 navigationController?.view.addSubview(indexView)
 
+// Enable automatic index bar hiding (hides when not in use).
+indexView.autoHides = true
+
 // Flash index bar (useful in methods such as viewWillAppear, to give the user a hint).
 indexView.flashIndex()
 ```
