@@ -24,8 +24,8 @@ protocol STBTableViewIndexDelegate: NSObjectProtocol {
 class STBTableViewIndex: UIControl {
 	
 	var delegate: STBTableViewIndexDelegate!
-	var panGestureRecognizer: UIPanGestureRecognizer!
-	var tapGestureRecognizer: UITapGestureRecognizer!
+	private var panGestureRecognizer: UIPanGestureRecognizer!
+	private var tapGestureRecognizer: UITapGestureRecognizer!
 	
 	var currentIndex = 0
 	var currentTitle: String { return titles[currentIndex] }
@@ -46,25 +46,25 @@ class STBTableViewIndex: UIControl {
 	}
 	}
 	
-	var labels = Array<UILabel>()
+	private var labels = Array<UILabel>()
 	
-	var width: CGFloat { return 16.0 }
-	var horizontalPadding: CGFloat { return 5.0 }
-	var verticalPadding: CGFloat { return 5.0 }
-	var endPadding: CGFloat { return 3.0 }
+	private var width: CGFloat { return 16.0 }
+	private var horizontalPadding: CGFloat { return 5.0 }
+	private var verticalPadding: CGFloat { return 5.0 }
+	private var endPadding: CGFloat { return 3.0 }
 	
-	var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
-	var controlOriginX: CGFloat {
+	private var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
+	private var controlOriginX: CGFloat {
 		let screenWidth = UIScreen.mainScreen().bounds.size.width
 		return screenWidth - controlSizeWidth
 	}
-	var controlOriginY: CGFloat {
+	private var controlOriginY: CGFloat {
 		if let topHeight = delegate?.tableViewIndexTopLayoutGuideLength() {
 			return topHeight
 		}
 		return 0.0
 	}
-	var controlSizeHeight: CGFloat {
+	private var controlSizeHeight: CGFloat {
 		var sizeHeight: CGFloat = 0.0
 		let screenHeight = UIScreen.mainScreen().bounds.size.height
 		sizeHeight = screenHeight
@@ -75,19 +75,19 @@ class STBTableViewIndex: UIControl {
 		return sizeHeight
 	}
 	
-	var controlFrame: CGRect {
+	private var controlFrame: CGRect {
 		return CGRectMake(controlOriginX, controlOriginY, controlSizeWidth, controlSizeHeight)
 	}
 	
-	var controlBounds: CGRect {
+	private var controlBounds: CGRect {
 		return CGRectMake(0.0, 0.0, controlSizeWidth, controlSizeHeight)
 	}
 	
-	var viewFrame: CGRect {
+	private var viewFrame: CGRect {
 		return CGRectInset(controlBounds, horizontalPadding, verticalPadding)
 	}
 	
-	var viewBounds: CGRect {
+	private var viewBounds: CGRect {
 		return CGRectMake(0.0, 0.0, viewFrame.size.width, viewFrame.size.height)
 	}
 	
@@ -110,11 +110,11 @@ class STBTableViewIndex: UIControl {
 		initialize()
 	}
 	
-	func initialize() {
-		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handleGesture:")
+	private func initialize() {
+		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "_handleGesture:")
 		addGestureRecognizer(panGestureRecognizer)
 		
-		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleGesture:")
+		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "_handleGesture:")
 		addGestureRecognizer(tapGestureRecognizer)
 		
 		view.backgroundColor = .whiteColor()
@@ -145,7 +145,7 @@ class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	func createLabels() {
+	private func createLabels() {
 		for label in labels {
 			label.removeFromSuperview()
 		}
@@ -163,7 +163,7 @@ class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	func setNewIndex(var #point: CGPoint) {
+	private func setNewIndex(var #point: CGPoint) {
 		point.x = CGRectGetWidth(view.frame) / 2.0
 		for label in labels {
 			if CGRectContainsPoint(label.frame, point) {
@@ -200,7 +200,7 @@ class STBTableViewIndex: UIControl {
 		visible = false
 	}
 	
-	func handleGesture(gesture: UIGestureRecognizer) {
+	func _handleGesture(gesture: UIGestureRecognizer) {
 		let location = gesture.locationInView(self)
 		setNewIndex(point: location)
 		visible = !(gesture.state == .Ended)
