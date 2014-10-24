@@ -58,7 +58,7 @@ class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 		
 		let section = sections[indexPath.section]
-		cell.textLabel?.text = "I’m cell \(indexPath.row + 1) in section \(section)"
+		cell.textLabel.text = "I’m cell \(indexPath.row + 1) in section \(section)"
 		
 		return cell
 	}

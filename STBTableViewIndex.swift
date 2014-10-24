@@ -117,7 +117,7 @@ class STBTableViewIndex: UIControl {
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleGesture:")
 		addGestureRecognizer(tapGestureRecognizer)
 		
-		view.backgroundColor = UIColor.whiteColor()
+		view.backgroundColor = .whiteColor()
 		view.layer.borderColor = UIColor(white: 0.0, alpha: 0.1).CGColor
 		view.layer.borderWidth = 1.0
 		view.layer.masksToBounds = true
@@ -152,8 +152,8 @@ class STBTableViewIndex: UIControl {
 		labels.removeAll()
 		for (tag, title) in enumerate(titles) {
 			var label = UILabel(frame: CGRectZero)
-			label.backgroundColor = UIColor.clearColor()
-			label.font = UIFont.boldSystemFontOfSize(10.0)
+			label.backgroundColor = .clearColor()
+			label.font = .boldSystemFontOfSize(10.0)
 			label.textColor = view.tintColor
 			label.textAlignment = .Center
 			label.text = title
