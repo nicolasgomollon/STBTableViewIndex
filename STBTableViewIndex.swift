@@ -47,7 +47,7 @@ class STBTableViewIndex: UIControl {
 	}
 	}
 	
-	private var labels = Array<UILabel>()
+	var labels = Array<UILabel>()
 	
 	private var width: CGFloat { return 16.0 }
 	private var horizontalPadding: CGFloat { return 5.0 }
