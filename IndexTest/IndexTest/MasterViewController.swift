@@ -55,10 +55,10 @@ class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 		
 		let section = sections[indexPath.section]
-		cell.textLabel.text = "I’m cell \(indexPath.row + 1) in section \(section)"
+		cell.textLabel?.text = "I’m cell \(indexPath.row + 1) in section \(section)"
 		
 		return cell
 	}
