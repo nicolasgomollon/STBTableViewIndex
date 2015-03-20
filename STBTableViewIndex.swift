@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-let STBTableViewIndexLayoutDidChange = UIDeviceOrientationDidChangeNotification
+public let STBTableViewIndexLayoutDidChange = UIDeviceOrientationDidChangeNotification
 
-protocol STBTableViewIndexDelegate: NSObjectProtocol {
+public protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
 	func tableViewIndexChanged(index: Int, title: String)
 	
@@ -21,33 +21,33 @@ protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
 }
 
-class STBTableViewIndex: UIControl {
+public class STBTableViewIndex: UIControl {
 	
-	weak var delegate: STBTableViewIndexDelegate!
+	public weak var delegate: STBTableViewIndexDelegate!
 	private var panGestureRecognizer: UIPanGestureRecognizer!
 	private var tapGestureRecognizer: UITapGestureRecognizer!
 	
-	var currentIndex = 0
-	var currentTitle: String { return titles[currentIndex] }
+	public var currentIndex = 0
+	public var currentTitle: String { return titles[currentIndex] }
 	
-	var view = UIView(frame: CGRectZero)
+	public var view = UIView(frame: CGRectZero)
 	
-	var titles: Array<String> {
-	didSet {
-		createLabels()
-	}
-	}
-	
-	var autoHides = true
-	var visible: Bool {
-	didSet {
-		UIView.animateWithDuration(0.2, animations: { [unowned self] in
-			self.view.alpha = self.visible ? 1.0 : 0.0
-		})
-	}
+	public var titles: Array<String> {
+		didSet {
+			createLabels()
+		}
 	}
 	
-	var labels = Array<UILabel>()
+	public var autoHides = true
+	public var visible: Bool {
+		didSet {
+			UIView.animateWithDuration(0.2, animations: { [unowned self] in
+				self.view.alpha = self.visible ? 1.0 : 0.0
+			})
+		}
+	}
+	
+	public var labels = Array<UILabel>()
 	
 	private var width: CGFloat { return 16.0 }
 	private var horizontalPadding: CGFloat { return 5.0 }
@@ -93,18 +93,18 @@ class STBTableViewIndex: UIControl {
 	}
 	
 	
-	convenience override init() {
+	public convenience override init() {
 		self.init(frame: CGRectZero)
 	}
 	
-	override init(frame: CGRect) {
+	public override init(frame: CGRect) {
 		titles = Array<String>()
 		visible = true
 		super.init(frame: CGRectZero)
 		initialize()
 	}
 	
-	required init(coder aDecoder: NSCoder) {
+	public required init(coder aDecoder: NSCoder) {
 		titles = Array<String>()
 		visible = true
 		super.init(coder: aDecoder)
@@ -128,7 +128,7 @@ class STBTableViewIndex: UIControl {
 		setNeedsLayout()
 	}
 	
-	override func layoutSubviews() {
+	public override func layoutSubviews() {
 		super.layoutSubviews()
 		
 		frame = controlFrame
@@ -177,20 +177,20 @@ class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	func hideIndex() {
+	public func hideIndex() {
 		visible = false
 	}
 	
-	func showIndex() {
+	public func showIndex() {
 		visible = true
 	}
 	
-	func flashIndex() {
+	public func flashIndex() {
 		view.alpha = 1.0
 		NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
 	}
 	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+	public override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		let touch = touches.anyObject() as UITouch
 		let location = touch.locationInView(self)
 		setNewIndex(point: location)
@@ -199,13 +199,13 @@ class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+	public override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
 		if autoHides {
 			visible = false
 		}
 	}
 	
-	func _handleGesture(gesture: UIGestureRecognizer) {
+	internal func _handleGesture(gesture: UIGestureRecognizer) {
 		let location = gesture.locationInView(self)
 		setNewIndex(point: location)
 		if autoHides {
