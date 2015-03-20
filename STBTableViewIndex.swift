@@ -23,7 +23,7 @@ protocol STBTableViewIndexDelegate: NSObjectProtocol {
 
 class STBTableViewIndex: UIControl {
 	
-	var delegate: STBTableViewIndexDelegate!
+	weak var delegate: STBTableViewIndexDelegate!
 	private var panGestureRecognizer: UIPanGestureRecognizer!
 	private var tapGestureRecognizer: UITapGestureRecognizer!
 	
@@ -41,7 +41,7 @@ class STBTableViewIndex: UIControl {
 	var autoHides = true
 	var visible: Bool {
 	didSet {
-		UIView.animateWithDuration(0.2, animations: {
+		UIView.animateWithDuration(0.2, animations: { [unowned self] in
 			self.view.alpha = self.visible ? 1.0 : 0.0
 		})
 	}
