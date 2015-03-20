@@ -190,8 +190,8 @@ class STBTableViewIndex: UIControl {
 		NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
 	}
 	
-	override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-		let touch = touches.first as! UITouch
+	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+		let touch = touches.anyObject() as UITouch
 		let location = touch.locationInView(self)
 		setNewIndex(point: location)
 		if autoHides {
@@ -199,7 +199,7 @@ class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+	override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
 		if autoHides {
 			visible = false
 		}
