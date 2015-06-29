@@ -49,6 +49,11 @@ public class STBTableViewIndex: UIControl {
 	
 	public var labels = Array<UILabel>()
 	
+	private var canAutoHide: Bool {
+		if UIAccessibilityIsVoiceOverRunning() { return false }
+		return autoHides
+	}
+	
 	private var width: CGFloat { return 16.0 }
 	private var horizontalPadding: CGFloat { return 5.0 }
 	private var verticalPadding: CGFloat { return 5.0 }
@@ -124,6 +129,12 @@ public class STBTableViewIndex: UIControl {
 		view.layer.masksToBounds = true
 		addSubview(view)
 		
+		isAccessibilityElement = true
+		shouldGroupAccessibilityChildren = true
+		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: NSBundle.mainBundle(), value: "Table index", comment: "")
+		accessibilityTraits = UIAccessibilityTraitAdjustable
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "accessibilityVoiceOverStatusChanged", name: UIAccessibilityVoiceOverStatusChanged, object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "setNeedsLayout", name: STBTableViewIndexLayoutDidChange, object: nil)
 		setNeedsLayout()
 	}
@@ -187,20 +198,22 @@ public class STBTableViewIndex: UIControl {
 	
 	public func flashIndex() {
 		view.alpha = 1.0
-		NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
+		if canAutoHide {
+			NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
+		}
 	}
 	
 	public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 		let touch = touches.first as! UITouch
 		let location = touch.locationInView(self)
 		setNewIndex(point: location)
-		if autoHides {
+		if canAutoHide {
 			visible = true
 		}
 	}
 	
 	public override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-		if autoHides {
+		if canAutoHide {
 			visible = false
 		}
 	}
@@ -208,9 +221,35 @@ public class STBTableViewIndex: UIControl {
 	internal func _handleGesture(gesture: UIGestureRecognizer) {
 		let location = gesture.locationInView(self)
 		setNewIndex(point: location)
-		if autoHides {
+		if canAutoHide {
 			visible = !(gesture.state == .Ended)
 		}
+	}
+	
+	internal func accessibilityVoiceOverStatusChanged() {
+		if autoHides {
+			visible = UIAccessibilityIsVoiceOverRunning()
+		}
+	}
+	
+	public override func accessibilityElementDidLoseFocus() {
+		accessibilityValue = nil
+	}
+	
+	public override func accessibilityIncrement() {
+		if currentIndex < (labels.count - 1) {
+			currentIndex++
+		}
+		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
+		accessibilityValue = currentTitle.lowercaseString
+	}
+	
+	public override func accessibilityDecrement() {
+		if currentIndex > 0 {
+			currentIndex--
+		}
+		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
+		accessibilityValue = currentTitle.lowercaseString
 	}
 	
 }
