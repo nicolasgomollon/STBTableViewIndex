@@ -139,6 +139,10 @@ public class STBTableViewIndex: UIControl {
 		setNeedsLayout()
 	}
 	
+	deinit {
+		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
 	public override func layoutSubviews() {
 		super.layoutSubviews()
 		
