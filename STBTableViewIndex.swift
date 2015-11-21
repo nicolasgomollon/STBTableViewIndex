@@ -109,7 +109,7 @@ public class STBTableViewIndex: UIControl {
 		initialize()
 	}
 	
-	public required init(coder aDecoder: NSCoder) {
+	public required init?(coder aDecoder: NSCoder) {
 		titles = Array<String>()
 		visible = true
 		super.init(coder: aDecoder)
@@ -166,8 +166,8 @@ public class STBTableViewIndex: UIControl {
 			label.removeFromSuperview()
 		}
 		labels.removeAll()
-		for (tag, title) in enumerate(titles) {
-			var label = UILabel(frame: CGRectZero)
+		for (tag, title) in titles.enumerate() {
+			let label = UILabel(frame: CGRectZero)
 			label.backgroundColor = .clearColor()
 			label.font = .boldSystemFontOfSize(10.0)
 			label.textColor = view.tintColor
@@ -179,7 +179,7 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	private func setNewIndex(var #point: CGPoint) {
+	private func setNewIndex(var point point: CGPoint) {
 		point.x = CGRectGetWidth(view.frame) / 2.0
 		for label in labels {
 			if CGRectContainsPoint(label.frame, point) {
@@ -207,16 +207,17 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-		let touch = touches.first as! UITouch
-		let location = touch.locationInView(self)
-		setNewIndex(point: location)
-		if canAutoHide {
-			visible = true
+	public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		let touch = touches.first
+		if let location = touch?.locationInView(self) {
+			setNewIndex(point: location)
+			if canAutoHide {
+				visible = true
+			}
 		}
 	}
 	
-	public override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+	public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		if canAutoHide {
 			visible = false
 		}
