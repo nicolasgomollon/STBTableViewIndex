@@ -117,10 +117,10 @@ public class STBTableViewIndex: UIControl {
 	}
 	
 	private func initialize() {
-		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "_handleGesture:")
+		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(STBTableViewIndex._handleGesture(_:)))
 		addGestureRecognizer(panGestureRecognizer)
 		
-		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "_handleGesture:")
+		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(STBTableViewIndex._handleGesture(_:)))
 		addGestureRecognizer(tapGestureRecognizer)
 		
 		view.backgroundColor = .whiteColor()
@@ -134,8 +134,8 @@ public class STBTableViewIndex: UIControl {
 		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: NSBundle.mainBundle(), value: "Table index", comment: "")
 		accessibilityTraits = UIAccessibilityTraitAdjustable
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "accessibilityVoiceOverStatusChanged", name: UIAccessibilityVoiceOverStatusChanged, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "setNeedsLayout", name: STBTableViewIndexLayoutDidChange, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(STBTableViewIndex.accessibilityVoiceOverStatusChanged), name: UIAccessibilityVoiceOverStatusChanged, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIView.setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
 		setNeedsLayout()
 	}
 	
@@ -179,7 +179,8 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	private func setNewIndex(var point point: CGPoint) {
+	private func setNewIndex(point p: CGPoint) {
+		var point = p
 		point.x = CGRectGetWidth(view.frame) / 2.0
 		for label in labels {
 			if CGRectContainsPoint(label.frame, point) {
@@ -203,7 +204,7 @@ public class STBTableViewIndex: UIControl {
 	public func flashIndex() {
 		view.alpha = 1.0
 		if canAutoHide {
-			NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "hideIndex", userInfo: nil, repeats: false)
+			NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(STBTableViewIndex.hideIndex), userInfo: nil, repeats: false)
 		}
 	}
 	
@@ -243,7 +244,7 @@ public class STBTableViewIndex: UIControl {
 	
 	public override func accessibilityIncrement() {
 		if currentIndex < (labels.count - 1) {
-			currentIndex++
+			currentIndex += 1
 		}
 		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
 		accessibilityValue = currentTitle.lowercaseString
@@ -251,7 +252,7 @@ public class STBTableViewIndex: UIControl {
 	
 	public override func accessibilityDecrement() {
 		if currentIndex > 0 {
-			currentIndex--
+			currentIndex -= 1
 		}
 		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
 		accessibilityValue = currentTitle.lowercaseString
