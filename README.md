@@ -33,8 +33,8 @@ Implement the delegate methods:
 
 ```swift
 func tableViewIndexChanged(index: Int, title: String) {
-	let indexPath = NSIndexPath(forRow: 0, inSection: index)
-	tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
+	let indexPath = IndexPath(row: 0, section: index)
+	tableView.scrollToRow(at: indexPath, at: .top, animated: false)
 }
 
 func tableViewIndexTopLayoutGuideLength() -> CGFloat {

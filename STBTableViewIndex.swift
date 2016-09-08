@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-public let STBTableViewIndexLayoutDidChange = UIDeviceOrientationDidChangeNotification
+public let STBTableViewIndexLayoutDidChange = NSNotification.Name.UIDeviceOrientationDidChange
 
 public protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
-	func tableViewIndexChanged(index: Int, title: String)
+	func tableViewIndexChanged(_ index: Int, title: String)
 	
 	func tableViewIndexTopLayoutGuideLength() -> CGFloat
 	
@@ -21,58 +21,58 @@ public protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
 }
 
-public class STBTableViewIndex: UIControl {
+open class STBTableViewIndex: UIControl {
 	
-	public weak var delegate: STBTableViewIndexDelegate!
-	private var panGestureRecognizer: UIPanGestureRecognizer!
-	private var tapGestureRecognizer: UITapGestureRecognizer!
+	open weak var delegate: STBTableViewIndexDelegate!
+	fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
+	fileprivate var tapGestureRecognizer: UITapGestureRecognizer!
 	
-	public var currentIndex = 0
-	public var currentTitle: String { return titles[currentIndex] }
+	open var currentIndex = 0
+	open var currentTitle: String { return titles[currentIndex] }
 	
-	public var view = UIView(frame: CGRectZero)
+	open var view = UIView(frame: CGRect.zero)
 	
-	public var titles: Array<String> {
+	open var titles: Array<String> {
 		didSet {
 			createLabels()
 		}
 	}
 	
-	public var autoHides = true
-	public var visible: Bool {
+	open var autoHides = true
+	open var visible: Bool {
 		didSet {
-			UIView.animateWithDuration(0.2, animations: { [unowned self] in
+			UIView.animate(withDuration: 0.2, animations: { [unowned self] () -> Void in
 				self.view.alpha = self.visible ? 1.0 : 0.0
 			})
 		}
 	}
 	
-	public var labels = Array<UILabel>()
+	open var labels = Array<UILabel>()
 	
-	private var canAutoHide: Bool {
+	fileprivate var canAutoHide: Bool {
 		if UIAccessibilityIsVoiceOverRunning() { return false }
 		return autoHides
 	}
 	
-	private var width: CGFloat { return 16.0 }
-	private var horizontalPadding: CGFloat { return 5.0 }
-	private var verticalPadding: CGFloat { return 5.0 }
-	private var endPadding: CGFloat { return 3.0 }
+	fileprivate var width: CGFloat { return 16.0 }
+	fileprivate var horizontalPadding: CGFloat { return 5.0 }
+	fileprivate var verticalPadding: CGFloat { return 5.0 }
+	fileprivate var endPadding: CGFloat { return 3.0 }
 	
-	private var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
-	private var controlOriginX: CGFloat {
-		let screenWidth = UIScreen.mainScreen().bounds.size.width
+	fileprivate var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
+	fileprivate var controlOriginX: CGFloat {
+		let screenWidth = UIScreen.main.bounds.size.width
 		return screenWidth - controlSizeWidth
 	}
-	private var controlOriginY: CGFloat {
+	fileprivate var controlOriginY: CGFloat {
 		if let topHeight = delegate?.tableViewIndexTopLayoutGuideLength() {
 			return topHeight
 		}
 		return 0.0
 	}
-	private var controlSizeHeight: CGFloat {
+	fileprivate var controlSizeHeight: CGFloat {
 		var sizeHeight: CGFloat = 0.0
-		let screenHeight = UIScreen.mainScreen().bounds.size.height
+		let screenHeight = UIScreen.main.bounds.size.height
 		sizeHeight = screenHeight
 		sizeHeight -= controlOriginY
 		if let bottomHeight = delegate?.tableViewIndexBottomLayoutGuideLength() {
@@ -81,31 +81,31 @@ public class STBTableViewIndex: UIControl {
 		return sizeHeight
 	}
 	
-	private var controlFrame: CGRect {
-		return CGRectMake(controlOriginX, controlOriginY, controlSizeWidth, controlSizeHeight)
+	fileprivate var controlFrame: CGRect {
+		return CGRect(x: controlOriginX, y: controlOriginY, width: controlSizeWidth, height: controlSizeHeight)
 	}
 	
-	private var controlBounds: CGRect {
-		return CGRectMake(0.0, 0.0, controlSizeWidth, controlSizeHeight)
+	fileprivate var controlBounds: CGRect {
+		return CGRect(x: 0.0, y: 0.0, width: controlSizeWidth, height: controlSizeHeight)
 	}
 	
-	private var viewFrame: CGRect {
-		return CGRectInset(controlBounds, horizontalPadding, verticalPadding)
+	fileprivate var viewFrame: CGRect {
+		return controlBounds.insetBy(dx: horizontalPadding, dy: verticalPadding)
 	}
 	
-	private var viewBounds: CGRect {
-		return CGRectMake(0.0, 0.0, viewFrame.size.width, viewFrame.size.height)
+	fileprivate var viewBounds: CGRect {
+		return CGRect(x: 0.0, y: 0.0, width: viewFrame.size.width, height: viewFrame.size.height)
 	}
 	
 	
 	public convenience init() {
-		self.init(frame: CGRectZero)
+		self.init(frame: CGRect.zero)
 	}
 	
 	public override init(frame: CGRect) {
 		titles = Array<String>()
 		visible = true
-		super.init(frame: CGRectZero)
+		super.init(frame: CGRect.zero)
 		initialize()
 	}
 	
@@ -116,62 +116,62 @@ public class STBTableViewIndex: UIControl {
 		initialize()
 	}
 	
-	private func initialize() {
+	fileprivate func initialize() {
 		panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(STBTableViewIndex._handleGesture(_:)))
 		addGestureRecognizer(panGestureRecognizer)
 		
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(STBTableViewIndex._handleGesture(_:)))
 		addGestureRecognizer(tapGestureRecognizer)
 		
-		view.backgroundColor = .whiteColor()
-		view.layer.borderColor = UIColor(white: 0.0, alpha: 0.1).CGColor
+		view.backgroundColor = .white
+		view.layer.borderColor = UIColor(white: 0.0, alpha: 0.1).cgColor
 		view.layer.borderWidth = 1.0
 		view.layer.masksToBounds = true
 		addSubview(view)
 		
 		isAccessibilityElement = true
 		shouldGroupAccessibilityChildren = true
-		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: NSBundle.mainBundle(), value: "Table index", comment: "")
+		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: Bundle.main, value: "Table index", comment: "")
 		accessibilityTraits = UIAccessibilityTraitAdjustable
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(STBTableViewIndex.accessibilityVoiceOverStatusChanged), name: UIAccessibilityVoiceOverStatusChanged, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIView.setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(STBTableViewIndex.accessibilityVoiceOverStatusChanged), name: Notification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(UIView.setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
 		setNeedsLayout()
 	}
 	
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
 		
 		frame = controlFrame
 		view.frame = viewFrame
-		view.layer.cornerRadius = CGRectGetWidth(view.frame) / 2.0
+		view.layer.cornerRadius = view.frame.width / 2.0
 		
 		var labelOriginY = endPadding
-		let labelWidth = CGRectGetWidth(view.frame)
-		let labelHeight = (CGRectGetHeight(view.frame) - (endPadding * 2.0)) / CGFloat(labels.count)
+		let labelWidth = view.frame.width
+		let labelHeight = (view.frame.height - (endPadding * 2.0)) / CGFloat(labels.count)
 		
 		for label in labels {
-			let labelFrame = CGRectMake(0.0, labelOriginY, labelWidth, labelHeight)
-			label.frame = CGRectIntegral(labelFrame)
+			let labelFrame = CGRect(x: 0.0, y: labelOriginY, width: labelWidth, height: labelHeight)
+			label.frame = labelFrame.integral
 			labelOriginY += labelHeight
 		}
 	}
 	
-	private func createLabels() {
+	fileprivate func createLabels() {
 		for label in labels {
 			label.removeFromSuperview()
 		}
 		labels.removeAll()
-		for (tag, title) in titles.enumerate() {
-			let label = UILabel(frame: CGRectZero)
-			label.backgroundColor = .clearColor()
-			label.font = .boldSystemFontOfSize(10.0)
+		for (tag, title) in titles.enumerated() {
+			let label = UILabel(frame: CGRect.zero)
+			label.backgroundColor = .clear
+			label.font = .boldSystemFont(ofSize: 10.0)
 			label.textColor = view.tintColor
-			label.textAlignment = .Center
+			label.textAlignment = .center
 			label.text = title
 			label.tag = tag
 			view.addSubview(label)
@@ -179,11 +179,11 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	private func setNewIndex(point p: CGPoint) {
+	fileprivate func setNewIndex(point p: CGPoint) {
 		var point = p
-		point.x = CGRectGetWidth(view.frame) / 2.0
+		point.x = view.frame.width / 2.0
 		for label in labels {
-			if CGRectContainsPoint(label.frame, point) {
+			if label.frame.contains(point) {
 				let newIndex = label.tag
 				if newIndex != currentIndex {
 					currentIndex = newIndex
@@ -193,24 +193,24 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	public func hideIndex() {
+	open func hideIndex() {
 		visible = false
 	}
 	
-	public func showIndex() {
+	open func showIndex() {
 		visible = true
 	}
 	
-	public func flashIndex() {
+	open func flashIndex() {
 		view.alpha = 1.0
 		if canAutoHide {
-			NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(STBTableViewIndex.hideIndex), userInfo: nil, repeats: false)
+			Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(STBTableViewIndex.hideIndex), userInfo: nil, repeats: false)
 		}
 	}
 	
-	public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		let touch = touches.first
-		if let location = touch?.locationInView(self) {
+		if let location = touch?.location(in: self) {
 			setNewIndex(point: location)
 			if canAutoHide {
 				visible = true
@@ -218,17 +218,17 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if canAutoHide {
 			visible = false
 		}
 	}
 	
-	internal func _handleGesture(gesture: UIGestureRecognizer) {
-		let location = gesture.locationInView(self)
+	internal func _handleGesture(_ gesture: UIGestureRecognizer) {
+		let location = gesture.location(in: self)
 		setNewIndex(point: location)
 		if canAutoHide {
-			visible = !(gesture.state == .Ended)
+			visible = !(gesture.state == .ended)
 		}
 	}
 	
@@ -238,24 +238,24 @@ public class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	public override func accessibilityElementDidLoseFocus() {
+	open override func accessibilityElementDidLoseFocus() {
 		accessibilityValue = nil
 	}
 	
-	public override func accessibilityIncrement() {
+	open override func accessibilityIncrement() {
 		if currentIndex < (labels.count - 1) {
 			currentIndex += 1
 		}
 		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
-		accessibilityValue = currentTitle.lowercaseString
+		accessibilityValue = currentTitle.lowercased()
 	}
 	
-	public override func accessibilityDecrement() {
+	open override func accessibilityDecrement() {
 		if currentIndex > 0 {
 			currentIndex -= 1
 		}
 		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
-		accessibilityValue = currentTitle.lowercaseString
+		accessibilityValue = currentTitle.lowercased()
 	}
 	
 }
