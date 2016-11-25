@@ -26,6 +26,7 @@ open class STBTableViewIndex: UIControl {
 	open weak var delegate: STBTableViewIndexDelegate!
 	fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
 	fileprivate var tapGestureRecognizer: UITapGestureRecognizer!
+	fileprivate var feedbackGenerator: AnyObject?
 	
 	open var currentIndex = 0
 	open var currentTitle: String { return titles[currentIndex] }
@@ -188,6 +189,7 @@ open class STBTableViewIndex: UIControl {
 				if newIndex != currentIndex {
 					currentIndex = newIndex
 					delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
+					hapticFeedbackSelectionChanged()
 				}
 			}
 		}
@@ -209,6 +211,7 @@ open class STBTableViewIndex: UIControl {
 	}
 	
 	open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		hapticFeedbackSetup()
 		let touch = touches.first
 		if let location = touch?.location(in: self) {
 			setNewIndex(point: location)
@@ -219,12 +222,19 @@ open class STBTableViewIndex: UIControl {
 	}
 	
 	open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		hapticFeedbackFinalize()
 		if canAutoHide {
 			visible = false
 		}
 	}
 	
 	internal func _handleGesture(_ gesture: UIGestureRecognizer) {
+		switch gesture.state {
+		case .ended, .cancelled, .failed:
+			hapticFeedbackFinalize()
+		default:
+			break
+		}
 		let location = gesture.location(in: self)
 		setNewIndex(point: location)
 		if canAutoHide {
@@ -256,6 +266,34 @@ open class STBTableViewIndex: UIControl {
 		}
 		delegate?.tableViewIndexChanged(currentIndex, title: currentTitle)
 		accessibilityValue = currentTitle.lowercased()
+	}
+	
+}
+
+extension STBTableViewIndex {
+	
+	fileprivate func hapticFeedbackSetup() {
+		if #available(iOS 10.0, *) {
+			let feedbackGenerator = UISelectionFeedbackGenerator()
+			feedbackGenerator.prepare()
+			
+			self.feedbackGenerator = feedbackGenerator
+		}
+	}
+	
+	fileprivate func hapticFeedbackSelectionChanged() {
+		if #available(iOS 10.0, *) {
+			if let feedbackGenerator = self.feedbackGenerator as? UISelectionFeedbackGenerator {
+				feedbackGenerator.selectionChanged()
+				feedbackGenerator.prepare()
+			}
+		}
+	}
+	
+	fileprivate func hapticFeedbackFinalize() {
+		if #available(iOS 10.0, *) {
+			self.feedbackGenerator = nil
+		}
 	}
 	
 }
