@@ -62,8 +62,8 @@ open class STBTableViewIndex: UIControl {
 	
 	fileprivate var controlSizeWidth: CGFloat { return width + (horizontalPadding * 2.0) }
 	fileprivate var controlOriginX: CGFloat {
-		let screenWidth = UIScreen.main.bounds.size.width
-		return screenWidth - controlSizeWidth
+		let superviewWidth = superview?.frame.size.width ?? UIScreen.main.bounds.size.width
+		return superviewWidth - controlSizeWidth
 	}
 	fileprivate var controlOriginY: CGFloat {
 		if let topHeight = delegate?.tableViewIndexTopLayoutGuideLength() {
