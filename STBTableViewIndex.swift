@@ -195,7 +195,7 @@ open class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	open func hideIndex() {
+	@objc open func hideIndex() {
 		visible = false
 	}
 	
@@ -228,7 +228,7 @@ open class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	internal func _handleGesture(_ gesture: UIGestureRecognizer) {
+	@objc internal func _handleGesture(_ gesture: UIGestureRecognizer) {
 		switch gesture.state {
 		case .ended, .cancelled, .failed:
 			hapticFeedbackFinalize()
@@ -242,7 +242,7 @@ open class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	internal func accessibilityVoiceOverStatusChanged() {
+	@objc internal func accessibilityVoiceOverStatusChanged() {
 		if autoHides {
 			visible = UIAccessibilityIsVoiceOverRunning()
 		}
