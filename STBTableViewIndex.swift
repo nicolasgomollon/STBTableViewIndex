@@ -230,6 +230,8 @@ open class STBTableViewIndex: UIControl {
 	
 	@objc internal func _handleGesture(_ gesture: UIGestureRecognizer) {
 		switch gesture.state {
+		case .began:
+			hapticFeedbackSetup()
 		case .ended, .cancelled, .failed:
 			hapticFeedbackFinalize()
 		default:
@@ -273,27 +275,23 @@ open class STBTableViewIndex: UIControl {
 extension STBTableViewIndex {
 	
 	fileprivate func hapticFeedbackSetup() {
-		if #available(iOS 10.0, *) {
-			let feedbackGenerator = UISelectionFeedbackGenerator()
-			feedbackGenerator.prepare()
-			
-			self.feedbackGenerator = feedbackGenerator
-		}
+		guard #available(iOS 10.0, *) else { return }
+		let feedbackGenerator = UISelectionFeedbackGenerator()
+		feedbackGenerator.prepare()
+		
+		self.feedbackGenerator = feedbackGenerator
 	}
 	
 	fileprivate func hapticFeedbackSelectionChanged() {
-		if #available(iOS 10.0, *) {
-			if let feedbackGenerator = self.feedbackGenerator as? UISelectionFeedbackGenerator {
-				feedbackGenerator.selectionChanged()
-				feedbackGenerator.prepare()
-			}
-		}
+		guard #available(iOS 10.0, *),
+			let feedbackGenerator = self.feedbackGenerator as? UISelectionFeedbackGenerator else { return }
+		feedbackGenerator.selectionChanged()
+		feedbackGenerator.prepare()
 	}
 	
 	fileprivate func hapticFeedbackFinalize() {
-		if #available(iOS 10.0, *) {
-			self.feedbackGenerator = nil
-		}
+		guard #available(iOS 10.0, *) else { return }
+		self.feedbackGenerator = nil
 	}
 	
 }
