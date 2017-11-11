@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2760071FB6DE9500AFE0CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA2760051FB6DE9500AFE0CB /* LaunchScreen.storyboard */; };
 		DA8F45801954F97900075BD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8F457F1954F97900075BD1 /* AppDelegate.swift */; };
 		DA8F45821954F97900075BD1 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8F45811954F97900075BD1 /* MasterViewController.swift */; };
 		DA8F45871954F97900075BD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA8F45851954F97900075BD1 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA2760061FB6DE9500AFE0CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA8F457A1954F97800075BD1 /* IndexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IndexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA8F457E1954F97900075BD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA8F457F1954F97900075BD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			children = (
 				DA8F457F1954F97900075BD1 /* AppDelegate.swift */,
 				DA8F45811954F97900075BD1 /* MasterViewController.swift */,
+				DA2760051FB6DE9500AFE0CB /* LaunchScreen.storyboard */,
 				DA8F45851954F97900075BD1 /* Main.storyboard */,
 				DA8F45881954F97900075BD1 /* Images.xcassets */,
 				DA8F457D1954F97900075BD1 /* Supporting Files */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEFCAAE1B41B7CA0079AF32 /* STBTableViewIndex.strings in Resources */,
+				DA2760071FB6DE9500AFE0CB /* LaunchScreen.storyboard in Resources */,
 				DA8F45871954F97900075BD1 /* Main.storyboard in Resources */,
 				DA8F45891954F97900075BD1 /* Images.xcassets in Resources */,
 			);
@@ -168,6 +172,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		DA2760051FB6DE9500AFE0CB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA2760061FB6DE9500AFE0CB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		DA8F45851954F97900075BD1 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -291,7 +303,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = IndexTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicolasgomollon.${PRODUCT_NAME:rfc1034identifier}";
@@ -305,7 +316,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = IndexTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicolasgomollon.${PRODUCT_NAME:rfc1034identifier}";
