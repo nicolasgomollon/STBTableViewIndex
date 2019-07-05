@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public let STBTableViewIndexLayoutDidChange = NSNotification.Name.UIDeviceOrientationDidChange
+public let STBTableViewIndexLayoutDidChange = UIDevice.orientationDidChangeNotification
 
 public protocol STBTableViewIndexDelegate: NSObjectProtocol {
 	
@@ -51,7 +51,7 @@ open class STBTableViewIndex: UIControl {
 	open var labels = Array<UILabel>()
 	
 	fileprivate var canAutoHide: Bool {
-		if UIAccessibilityIsVoiceOverRunning() { return false }
+		if UIAccessibility.isVoiceOverRunning { return false }
 		return autoHides
 	}
 	
@@ -133,7 +133,7 @@ open class STBTableViewIndex: UIControl {
 		isAccessibilityElement = true
 		shouldGroupAccessibilityChildren = true
 		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: Bundle.main, value: "Table index", comment: "")
-		accessibilityTraits = UIAccessibilityTraitAdjustable
+		accessibilityTraits = UIAccessibilityTraits.adjustable
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(STBTableViewIndex.accessibilityVoiceOverStatusChanged), name: Notification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(UIView.setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
@@ -246,7 +246,7 @@ open class STBTableViewIndex: UIControl {
 	
 	@objc internal func accessibilityVoiceOverStatusChanged() {
 		if autoHides {
-			visible = UIAccessibilityIsVoiceOverRunning()
+			visible = UIAccessibility.isVoiceOverRunning
 		}
 	}
 	
