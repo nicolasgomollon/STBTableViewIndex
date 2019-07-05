@@ -10,8 +10,8 @@ import UIKit
 
 class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 	
-	var sections = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"]
-	var indexView = STBTableViewIndex()
+	var sections: Array<String> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"]
+	var indexView: STBTableViewIndex = .init()
 	
 	
 	override func awakeFromNib() {
@@ -55,9 +55,9 @@ class MasterViewController: UITableViewController, STBTableViewIndexDelegate {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+		let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 		
-		let section = sections[indexPath.section]
+		let section: String = sections[indexPath.section]
 		cell.textLabel?.text = "I’m cell \(indexPath.row + 1) in section \(section)"
 		
 		return cell
