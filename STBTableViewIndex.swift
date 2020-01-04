@@ -33,7 +33,7 @@ open class STBTableViewIndex: UIControl {
 	
 	open var view: UIView = UIView(frame: .zero)
 	
-	open var titles: Array<String> {
+	open var titles: [String] {
 		didSet {
 			createLabels()
 		}
@@ -48,7 +48,7 @@ open class STBTableViewIndex: UIControl {
 		}
 	}
 	
-	open var labels: Array<UILabel> = .init()
+	open var labels: [UILabel] = .init()
 	
 	fileprivate var canAutoHide: Bool {
 		guard !UIAccessibility.isVoiceOverRunning else { return false }
@@ -128,7 +128,7 @@ open class STBTableViewIndex: UIControl {
 		isAccessibilityElement = true
 		shouldGroupAccessibilityChildren = true
 		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: .main, value: "Table index", comment: "")
-		accessibilityTraits = .adjustable
+		accessibilityTraits = [.adjustable]
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(accessibilityVoiceOverStatusChanged), name: Notification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
@@ -263,14 +263,14 @@ extension STBTableViewIndex {
 	
 	fileprivate func hapticFeedbackSetup() {
 		guard #available(iOS 10.0, *) else { return }
-		let feedbackGenerator = UISelectionFeedbackGenerator()
+		let feedbackGenerator: UISelectionFeedbackGenerator = .init()
 		feedbackGenerator.prepare()
 		self.feedbackGenerator = feedbackGenerator
 	}
 	
 	fileprivate func hapticFeedbackSelectionChanged() {
 		guard #available(iOS 10.0, *),
-			let feedbackGenerator = self.feedbackGenerator as? UISelectionFeedbackGenerator else { return }
+			let feedbackGenerator: UISelectionFeedbackGenerator = self.feedbackGenerator as? UISelectionFeedbackGenerator else { return }
 		feedbackGenerator.selectionChanged()
 		feedbackGenerator.prepare()
 	}
