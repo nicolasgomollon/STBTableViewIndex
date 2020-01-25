@@ -130,7 +130,7 @@ open class STBTableViewIndex: UIControl {
 		accessibilityLabel = NSLocalizedString("STBTableViewIndex-LABEL", tableName: "STBTableViewIndex", bundle: .main, value: "Table index", comment: "")
 		accessibilityTraits = [.adjustable]
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(accessibilityVoiceOverStatusChanged), name: Notification.Name(rawValue: UIAccessibilityVoiceOverStatusChanged), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(accessibilityVoiceOverStatusChanged), name: UIAccessibility.voiceOverStatusDidChangeNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(setNeedsLayout), name: STBTableViewIndexLayoutDidChange, object: nil)
 		setNeedsLayout()
 	}
