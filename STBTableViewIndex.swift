@@ -119,6 +119,11 @@ open class STBTableViewIndex: UIControl {
 		tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(STBTableViewIndex._handleGesture(_:)))
 		addGestureRecognizer(tapGestureRecognizer)
 		
+		if #available(iOS 13.0, *) {
+			let hoverGestureRecognizer: UIHoverGestureRecognizer = .init(target: self, action: #selector(STBTableViewIndex._handleHover(_:)))
+			addGestureRecognizer(hoverGestureRecognizer)
+		}
+		
 		view.backgroundColor = .white
 		view.layer.borderColor = UIColor(white: 0.0, alpha: 0.1).cgColor
 		view.layer.borderWidth = 1.0
@@ -230,6 +235,21 @@ open class STBTableViewIndex: UIControl {
 		setNewIndex(point: location)
 		guard canAutoHide else { return }
 		visible = !(gesture.state == .ended)
+	}
+	
+	@objc internal func _handleHover(_ gesture: UIGestureRecognizer) {
+		switch gesture.state {
+		case .began,
+			 .changed:
+			guard canAutoHide else { break }
+			visible = true
+		case .ended,
+			 .cancelled:
+			guard canAutoHide else { break }
+			visible = false
+		default:
+			break
+		}
 	}
 	
 	@objc internal func accessibilityVoiceOverStatusChanged() {
